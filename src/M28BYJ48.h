@@ -52,7 +52,7 @@ class M28BYJ48 {
     
     int version(void);
     enum Motor {A, AB, B, BC, C, CD, D, DA, MOTOR_OFF};
-    enum m_dir {CW, CCW}; // <------------------------NEXT UPDATE
+    enum m_dir {CW, CCW};
     
   private:
     void logicOut( int pin_4,int pin_3,int pin_2,int pin_1);
