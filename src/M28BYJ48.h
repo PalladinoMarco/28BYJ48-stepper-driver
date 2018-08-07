@@ -44,7 +44,7 @@ class M28BYJ48 {
     
     // mover method:
     void tuning (unsigned int rpm);                                // set rpm
-                                                                   // don't fix rpm for external command application (ex grbl)
+                                                                   // don't set rpm if your add code generate a step pulse and acceleratoon curve (ex grbl)
     void moveSteps (unsigned long steps, unsigned int m_dir);      // move in steps
     void moveDeg (float deg, unsigned int m_dir);                  // move in degree
     void moveMm (float mm, unsigned int m_dir);                    // next upgrade move in mm
