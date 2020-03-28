@@ -35,6 +35,9 @@
 #include "WProgram.h"
 #endif
 
+typedef enum Motor {A, AB, B, BC, C, CD, D, DA, MOTOR_OFF};
+typedef enum m_dir {CW, CCW};
+
 // library interface description
 class M28BYJ48 {
   public:
@@ -45,24 +48,22 @@ class M28BYJ48 {
     // mover method:
     void tuning (unsigned int rpm);                                // set rpm
                                                                    // don't set rpm if your add code generate a step pulse and acceleratoon curve (ex grbl)
-    void moveSteps (unsigned long steps, unsigned int m_dir);      // move in steps
-    void moveDeg (float deg, unsigned int m_dir);                  // move in degree
-    void moveMm (float mm, unsigned int m_dir);                    // next upgrade move in mm
+    void moveSteps (unsigned long steps, m_dir direction);         // move in steps
+    void moveDeg (float deg, m_dir direction);                     // move in degree
+    void moveMm (float mm, m_dir direction);                       // next upgrade move in mm
     void motorStop (void);                                         // stop motor
     
     int version(void);
-    enum Motor {A, AB, B, BC, C, CD, D, DA, MOTOR_OFF};
-    enum m_dir {CW, CCW};
     
   private:
     void logicOut( int pin_4,int pin_3,int pin_2,int pin_1);
-    void step(int phase);
+    void step(Motor phase);
     
     int steps_for_rev;
-    unsigned int m_dir;
+    m_dir direction;
     unsigned long step_pulse;
     unsigned long last_time;
-    int phase;
+    Motor phase;
     
     // motor pin numbers:
     int pin_1;
