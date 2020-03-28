@@ -60,7 +60,7 @@ void M28BYJ48::logicOut( int IN4,int IN3,int IN2,int IN1)
 }
 
 // 28BYJ48 motor phases
-void M28BYJ48::step(int phase)
+void M28BYJ48::step(Motor phase)
 {
   switch (phase)
     {
@@ -83,13 +83,13 @@ void M28BYJ48::tuning (unsigned int rpm)
 }
 
 // move motor with steps
-void M28BYJ48::moveSteps (unsigned long steps, unsigned int m_dir)
+void M28BYJ48::moveSteps (unsigned long steps, m_dir direction)
 {
    // set counter for steps left
    int steps_left = abs(steps);
    
 	 // determin direction
-   this->m_dir = m_dir;
+   this->direction = direction;
 	 
 	 // loop for call phases case
 	 while (steps_left > 0)
@@ -103,7 +103,7 @@ void M28BYJ48::moveSteps (unsigned long steps, unsigned int m_dir)
     
    // reset timer
    this->last_time = timer;
-	 if (this->m_dir==1) {this->phase+=1; if (this->phase == this->steps_for_rev){this->phase = 0;}}
+	 if (this->direction==1) {this->phase+=1; if (this->phase == this->steps_for_rev){this->phase = 0;}}
    else {if (this->phase == 0) {this->phase = this->steps_for_rev;} this->phase-=1;
    }
    steps_left--; // decrement step left counter
@@ -114,9 +114,9 @@ void M28BYJ48::moveSteps (unsigned long steps, unsigned int m_dir)
   }
 }
 // move motor with degree
-void M28BYJ48::moveDeg (float deg, unsigned int m_dir)
+void M28BYJ48::moveDeg (float deg, m_dir direction)
 {
-  (deg == 'MOTOR_OFF')?step(MOTOR_OFF):moveSteps(round(deg * this->steps_for_rev / 360), m_dir);
+  (deg == 'MOTOR_OFF')?step(MOTOR_OFF):moveSteps(round(deg * this->steps_for_rev / 360), direction);
 }
 
 void M28BYJ48::motorStop(void) {
